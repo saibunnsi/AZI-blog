@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+{% load i18n static %}
+{% load crispy_forms_tags i18n %}
+
+
+{% block card_heading %}
+  <h2>Login</h2>
+{% endblock %}
+
+
+ {% block card_body %}
+  <form class="form" action="{% url 'ccusers:login' %}" method="POST">
+          {% csrf_token %}
+            {{ form|crispy }}
+
+    <div class="checkbox">
+      <label><input type="checkbox"> Remember me</label>
+    </div>
+    <button type="submit" class="btn btn-outline-primary my-2 my-sm-0">Submit</button>
+       <input type="hidden" name="next" value="{{ next }}"/>
+  </form>
+        <div>
+            <span>忘记密码？<a href="{% url 'ccusers:password_reset' %}">修改密码</a></span>
+        </div>
+ {% endblock %}

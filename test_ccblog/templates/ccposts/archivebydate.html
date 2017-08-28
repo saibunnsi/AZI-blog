@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+{% extends 'base.html'%}
+
+{% block card_heading %}
+    <h2><b>日期档案</b></h2>
+{% endblock %}
+
+{% block card_body %}
+{% load paginate_tags %}
+{% paginate article_list 20 %}
+    {% for article in article_list %}
+        <div class="text-align:left;">
+            <a href="{% url 'ccposts:detail' article.slug %}">
+            <td>{{ article.last_modified_time|date:"Y-m-d" }}&nbsp;</td>
+            <b>{{ article.title }}</b>
+            </a>
+        </div>
+        <p style="text-align:right;">
+            |标签:{{ article.tags }}
+            |阅读 &nbsp;{{ article.views }}
+            |点赞 &nbsp;{{ article.likes }}|
+        </p>
+        {% endfor %}
+
+    {% include 'ccposts/pagination.html '%}
+{% endblock %}

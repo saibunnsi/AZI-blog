@@ -1,0 +1,13 @@
+{% if posts.count > 0 %}
+{% for post in posts %}
+<li>
+   <a href="{{ post.object.get_absolute_url }}">
+      <!--  <a href="{% url 'ccposts:detail' post.slug %}"> -->
+        {{ post.object.title }}
+    </a>
+</li>
+{% endfor %}
+{% else %}
+
+<li>None to show!</li>
+{% endif %}

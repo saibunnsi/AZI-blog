@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+{% load i18n static %}
+
+{% block card_heading %}
+<h3>您已完成注册！</h3>
+{% endblock %}
+ {% block card_body %}
+<h4>首次登录需前往邮箱激活账号，快去邮箱激活吧！</h4>
+<a href="{% url 'ccposts:index' %}">点此返回博文首页</a>
+{% if messages %}
+
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+{% endblock %}

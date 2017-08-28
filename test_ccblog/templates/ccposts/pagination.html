@@ -1,0 +1,77 @@
+{% load static %}
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
+
+<nav id="pagenavi" aria-label="Page navigation example">
+    <ul class="pagination justify-content-center">
+    {% if article_list.has_previous %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ article_list.previous_page_number }}" tabindex="-1">Previous</a>
+        </li>
+    {% else %}
+        <li class="page-item disabled">
+             <a class="page-link" href="#" tabindex="-1">Previous</a>
+        </li>
+    {% endif %}
+
+    <!--如果首页是当前页：-->
+	{% if first_page == current_page %}
+        <!--则页码1无链接-->
+        <li class="page-item disabled"><a class="page-link" href="#">1</a></li>
+    <!--如果首页不是当前页：-->
+    {% else %}
+        <!--页码1提供链接-->
+        <li class="page-item"><a class="page-link" href="?page=1">1</a></li>
+    {% endif %}
+
+    <!--如果页码栏左侧开始页码数多于2：-->
+    {% if pages_first > 2 %}
+        <!--则提供省略号-->
+        <li class="page-item disabled"><a class="page-link" href="#">&hellip;</a></li>
+    {% endif %}
+    <!--对于页码群中的页码：-->
+    {% for page in pages %}
+        <!--如果页码按钮代表当前页：-->
+        {% if page == current_page %}
+            <!--则该页码按钮无链接，按钮显示当前页码-->
+            <li class="page-item disabled"><a class="page-link" href="#">{{ page }}</a></li>
+        <!--如果页码按钮不代表当前页：-->
+        {% else %}
+            <!--则页码按钮提供链接，至相应页，且按钮显示相应页数-->
+            <li class="page-item"><a class="page-link" href="?page={{ page }}">{{ page }}</a></li>
+        {% endif %}
+    {% endfor %}
+
+    <!--如果尾页页码大于当前页右侧页码：-->
+    {% if last_page > pages_last %}
+        <!--则提供省略号-->
+        <li class="page-item disabled"><a class="page-link" href="#">&hellip;</a></li>
+    {% endif %}
+
+    <!--如果页码总数大于1：-->
+    {% if last_page != 1 %}
+        <!--且如果尾页按钮显示的是当前页:-->
+        {% if last_page == current_page %}
+            <!--尾页按钮不提供链接，且按钮号码显示当前页-->
+            <li class="page-item disabled"><a class="page-link" href="#"> {{ last_page }}</a></li>
+        <!--而尾页按钮不表示当前页：-->
+        {% else %}
+            <!--则尾页按钮提供链接，且按钮号码显示尾页号码-->
+            <li class="page-item"><a class="page-link" href="?page={{ last_page }}">{{ last_page }}</a></li>
+        {% endif %}
+    {% endif %}
+    <!--如果总页数大于1：-->
+    {% if article_list.has_next %}
+        <!--则next按钮提供链接-->
+        <li class="page-item">
+            <a class="page-link" href="?page={{ article_list.next_page_number }}">Next</a>
+        </li>
+    <!--否则next按钮不提供链接-->
+    {% else %}
+        <li class="page-item disabled ">
+            <a class="page-link" href="#">Next</a>
+        </li>
+    {% endif %}
+    </ul>
+</nav>

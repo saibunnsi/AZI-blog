@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+{% load i18n static %}
+
+{% block card_heading %}
+    <h3>Thank you for your registration!</h3>
+{% endblock %}
+
+ {% block card_body %}
+<h4>
+    <a href="{% url 'ccusers:login' %}">Login</a>
+     now to view your account
+</h4>
+{% endblock %}

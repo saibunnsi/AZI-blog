@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+{% load static %}
+{% load blog_tags %}
+{% load crispy_forms_tags %}
+{% load markdown_deux_tags %}
+{% load likes_inclusion_tags %}
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AZI Post Detail</title>
+
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/ccposts/css/pygments/github.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:700">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/static/ccposts/social-share/dist/social-share.min.css">
+    <script src="https://code.jquery.com/jquery-3.2.1.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
+   <!--<script src="/static/ccposts/startbootstrap-agency-gh-pages/vendor/jquery/jquery.min.js"></script>-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/popper.js/1.12.3/esm/popper.js"></script>
+    <script type="text/javascript" src="likes/includes/likes.js"></script>
+    <script src="/static/ccposts/social-share/dist/social-share.min.js"></script>
+
+
+
+
+</head>
+<style>
+.affix-top {
+        width: 200px;
+        }
+.affix {
+		top: 30px;
+		width: 250px;
+		position:fixed;
+		}
+.affix-bottom {
+        bottom:40px;
+        }
+
+.myScrollspy {
+        position:relative;
+        margin-top:20px;
+        overflow:auto
+        }
+body{
+        background-color:rgba(240, 230, 140, 0.6);//#f1f1f1;
+        position: relative;
+    }
+.row{
+    margin-left:0px;
+    margin-right:0px;}
+tbody{
+    vertical-align: inherit;
+    }
+.linenos{
+    border-left-style: inset;
+    background-color: gainsboro;
+    border-top-style: hidden;
+    }
+.codehilite{
+        box-sizing: content-box;
+        width: 80%;
+        overflow: auto;
+        border-color: rgba(12, 12, 12, 0.07);
+        border-left-style: inset;
+        border-right-style: inset;
+        border-top-style: inset;
+        background-color: lightyellow;
+        border-bottom-style: inset;
+        padding:5px;
+        }
+hr{
+    height: 6px;
+	background: url(http://ibrahimjabbari.com/english/images/hr-12.png) repeat-x 0 0;
+    border: 0;
+	width: -webkit-fill-available;
+}
+
+#tags-header{
+         background-color: rgba(236, 189, 29, 0.64);
+    }
+#new-posts-header{
+        background-color: gold;
+        }
+#new-posts-body{
+        text-align: left;
+        padding:0px;
+    }
+#posts-sort-header{
+        background-color: YellowGreen ;
+    }
+#posts-archive-header{
+        background-color: rgba(15, 56, 245, 0.49);
+    }
+#post-content-header{
+        background-color: rgba(23, 42, 165, 0.43);
+        }
+#Reply{
+        margin-left:10px;
+    }
+#comments-container{
+        margin: auto;
+        background-color: lightgoldenrodyellow;
+}
+
+blockquote{
+        border-left-style: solid;
+        border-right-style: ridge;
+        background-color: whitesmoke;
+        border-left-width: 5px;
+        border-left-color: red;
+        padding-top: 10px;
+}
+
+.h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
+        margin-left:6px;
+        margin-right:6px;
+        margin-top: 6px;
+        margin-bottom: 6px;
+    }
+#post-card{
+        padding:10px;
+        }
+.card{
+        background-color:#fff;
+        min-height:100px;
+        box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+        border-radius: 3px;
+        }
+.card-header{
+        padding: .35rem .25rem;
+        border-bottom: 0px;
+        text-align:center;
+        }
+.card-title{
+        margin-bottom: .25rem;
+        margin-left: auto;
+    }
+.card span.card-title {
+        color: #fff;
+        font-size: 24px;
+        font-weight: 300;
+        text-transform: uppercase;
+        }
+.img,img{
+         width: 100%;
+        }
+.pre, .form-group{
+        margin-left:10px;
+        margin-right:10px;
+
+        }
+.p,p{
+        margin-left:10px;
+        margin-right:10px;
+        }
+#footer{
+        background-color: black;
+        }
+#comment_content,#comment_requirement{
+        margin-left:10px;
+        }
+
+.navbar-brand {
+        display: inline-block;
+        padding-top: .1125rem;
+        padding-bottom: .1125rem;
+        margin-right: 1rem;
+        font-size: 1.65rem;
+        line-height: inherit;
+        white-space: nowrap;
+pre, {
+        display: block;
+        padding: 10px;
+        margin: 0 0 10px;
+        font-size: 13px;
+        line-height: 1.42857143;
+        color: #333;
+        word-break: break-all;
+        word-wrap: break-word;
+        background-color: #f5f5f5;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        }
+</style>
+<script>
+
+		function submit(){
+		        var content = document.getElementByIdx_x_x("search bar").value;
+		        window.location.href='/search/?q='+content;
+		        }
+		function mySearchFunction(){
+			var x = document.getElementById("mySearch").value;
+			window.location.href='/search/?q='+x;//+'&models=ccposts.Article';
+		}
+
+
+		$(document).ready(function(){
+			$(".comment-reply-btn").click(function(event){
+				event.preventDefault();
+				$(this).parent().next(".comment-reply").fadeToggle();
+			});
+		})
+
+        $(document).ready(function(){
+                    $(".new-posts-check-btn").click(function(event){
+                        event.preventDefault();
+                        $(this).parent().next(".new-posts-check").fadeToggle();
+                    });
+                })
+		$(document).ready(function(){
+			$(".content-markdown").each(function(){
+					var content = $(this).text()
+					var markedContent = marked(content)
+					$(this).html(markedContent)
+				 });
+			$(".post-detail-item img").each(function(){
+					$(this).addClass("img-responsive");
+				});
+
+			})
+
+
+
+$('#post-content-card').affix({
+   offset: {
+      top: 100,//滚动中距离页面顶端的位置
+      bottom: function () {//滚动完成时距离页面底部的位置
+         return (this.bottom =
+            $('.footer').outerHeight(true))
+         }
+      }
+})
+</script>
+<script>
+var el = document.getElementById('share-area');
+var links = [{
+    url: 'http://harttle.com',
+    target: '_qrcode'
+            },
+            {
+    plugin: 'weibo',
+    args: {
+        appid: 'ccposts',         // Default: ''
+        title: 'About Harttle',         // Default: document.title
+        url: '//harttle.com/about.html' // Default: location.href
+        source: 'http://harttle.com'    // Any other query string you need...
+    }
+}];
+window.socialShare(el, links);
+(function(socialShare) {
+    socialShare.plugin('weibo', function(args) {
+        return {
+            url: '//harttle.com/about.html' + args.id,
+            background: '#b5b5b5',
+            icon: 'fa-weibo'
+        };
+    });
+})(window.socialShare);
+</script>
+<body>
+    <nav id="nav" class="navbar navbar-toggleable-md bg-faded navbar-expand-lg" style="background-color: black;padding-right:0px;">
+        <a class="text-warning navbar-brand" href="#" id="brand">AZI </a>
+        <button id="toggler" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div id="navbarSupportedContent" class="collapse navbar-collapse">
+            <ul class="navbar-nav mr-auto">
+                <li class="active nav-item"><a href="{% url 'ccposts:index' %}" class="btn btn-outline-success my-2 my-sm-0">首页</a></li>
+                <li class="nav-item"><a href="{% url 'ccposts:archive' %}" class="btn btn-outline-success my-2 my-sm-0">档案</a></li>
+                <li><a  href="{% url 'ccposts:aboutme' %}" class="btn btn-outline-success my-2 my-sm-0">关于</a></li>
+               <!-- <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css' />-->
+                <li class="nav-item">
+                    <a href="{% url 'ccposts:RSS' %}" class="btn btn-outline-success my-2 my-sm-0">RSS</a>
+                </li>
+            </ul>
+
+            {% if user.is_authenticated %}
+				<button class="btn btn-outline-primary my-2 my-sm-0"> {{ user.username }}</button>
+				<a href="{% url 'ccusers:logout' %}?next={{ request.path }}" class="btn btn-outline-primary my-2 my-sm-0">Logout</a>
+			{% else %}
+				<a href="{% url 'ccusers:login' %}?next={{ request.path }}" class="btn btn-outline-primary my-2 my-sm-0">Login</a>
+				<!--<a href="{% url 'ccusers:register' %}?next={{ request.path }}" class="btn btn-outline-primary my-2 my-sm-0">Register</a>-->
+            	<a href="{% url 'ccusers:register' %}" class="btn btn-outline-primary my-2 my-sm-0">Register</a>
+			{% endif %}
+            <div class="col-lg-2" style="margin-right:0px;">
+                <div class="input-group">
+                  <input id="mySearch" type="text" class="form-control mr-sm-0" placeholder="Search for..." aria-label="Search"/>
+                  <span class="input-group-btn">
+                    <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit" onclick="mySearchFunction()">Go!</button>
+                  </span>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <div class="container-fluid" id="Article" style="margin-top:20px;margin-bottom:auto">
+
+    <div class="row">
+        <div class="col-md-2">
+            <div class="card" data-spy="affix" data-offset-top="190" id="post-content-card">
+                <div class="card-header" id="post-content-header">
+                    <h5 class="card-title">本文目录</h5></div>
+                <div class="card-body" id="post-content-body">
+                    <div id="content">
+                     {{ toc|safe }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+
+            <div class="col-md-8" id="middle-column" >
+                <section id="new-posts-section">
+                    <div>
+                        |<a class="new-posts-check-btn" href="#">点击查看最新文章</a>|
+                    </div>
+                    <div class="new-posts-check" style="display:none;" >
+                        <div class="card" id="new-posts-card">
+                            <div class="card-header" id="new-posts-header">
+                                <h6 class="card-title">最新文章</h6>
+                            </div>
+                            <div class="card-body" id="new-posts-body">
+                                {% get_recent_articles as recent_article_list %}
+                                {% for article in recent_article_list %}
+                                <a href="{% url 'ccposts:detail' article.slug %}" class="card-link" style="margin:0px;">
+                                <p class="card-text;">{{ article.last_modified_time|date:"Y-m-d" }}|{{ article.title }}</p>
+                                </a>
+                                {% empty %}
+                                <h6>暂无文章！</h6>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section id="post-header">
+                    <div class="card" id="post-card">
+                        <div class="row" style="margin:0px;" >
+                            <div class="col-md-6 col-sm-12" style="margin-bottom:0px;fit-content;text-align:left;">
+                                目录:{{ instance.category }}
+                            </div>
+                                 {% likes instance %}
+
+                            <div class="col-md-2 col-sm-2" style="fit-content;text-align:right;">
+                                浏览{{ instance.increase_views }}次
+                            </div>
+                            <div class="col-md-2 col-sm-2" style="fit-content;text-align:right;">
+                                评论{{ instance.comments.count }}条
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12">
+                                <hr>
+                                <h3 class="text-center">{{ instance.title }}</h3>
+                                <hr>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 col-sm-12">
+                                <p class="text-left text-success">| Publish:&nbsp;{{ instance.created_time|date:"Y-m-d H:i:s" }}</p>
+                                <p class="text-left">标签:
+                                    {% for tag in instance.tags.all %}
+									<a href="{% url 'ccposts:tag' tag.pk %}" class="btn btn-outline-primary my-2 my-sm-0">
+                                        {{ tag }}
+                                    </a>
+                                     {% endfor %}
+                                </p>
+                            </div>
+                            <div class="col-md-6 col-sm-12">
+                                <p class="text-right text-danger">Modified:&nbsp;{{ instance.last_modified_time|date:"Y-m-d H:i:s" }}|</p>
+                                <div style="text-align:-webkit-right">
+                                </div>
+                            </div>
+                        </div>
+
+                        <p class="lead">{{ instance.body|safe }}</p>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div id="xs"><ul class="social-share social-share-xs" style="text-align: -webkit-center;">
+
+                                    <li class="social-share-item">
+                                        <a href="http://facebook.com" target="" style="background: rgb(59, 89, 152);">
+                                            <i class="fa fa-facebook" style="color: rgb(255, 255, 255);"></i>
+                                        </a>
+                                    </li>
+                                    <li class="social-share-item">
+                                        <a href="//plus.google.com/+杨珺" target="" style="background: rgb(198, 61, 45);">
+                                            <i class="fa fa-google-plus" style="color: rgb(255, 255, 255);"></i>
+                                        </a>
+                                    </li>
+                                    <li class="social-share-item">
+                                        <a href="//v.t.sina.com.cn/share/share.php?appid=xxx&amp;source=http%3A%2F%2Fharttle.com&amp;title=Social%20Share%20Demo&amp;url=http%3A%2F%2Fharttle.com%2Fsocial-share%2F" target="" style="background: rgb(230, 22, 45);">
+                                            <i class="fa fa-weibo" style="color: rgb(255, 255, 255);"></i>
+                                        </a>
+                                    </li>
+                                    <li class="social-share-item">
+                                        <a href="http://harttle.com/social-share/" style="background: rgb(119, 204, 109);">
+                                            <i class="fa fa-wechat" style="color: rgb(255, 255, 255);"></i>
+                                        </a>
+                                    </li>
+                                    <li class="social-share-item">
+                                        <a href="http://harttle.com" style="background: rgb(85, 85, 85);">
+                                            <i class="fa fa-qrcode" style="color: rgb(255, 255, 255);"></i>
+                                        </a>
+                                    </li>
+                                    <li class="social-share-item">
+                                        <a href="//www.linkedin.com/in/harttle" target="" style="background: rgb(72, 117, 180);">
+                                            <i class="fa fa-linkedin" style="color: rgb(255, 255, 255);"></i>
+                                        </a>
+                                    </li>
+                                    <li class="social-share-item">
+                                        <a href="http://harttle.com/feed.xml" target="" style="background: rgb(250, 155, 57);">
+                                            <i class="fa fa-rss" style="color: rgb(255, 255, 255);"></i>
+                                        </a>
+                                    </li>
+                                    <li class="social-share-item">
+                                        <a href="//github.com/harttle" target="" style="background: rgb(181, 181, 181);">
+                                            <i class="fa fa-github" style="color: rgb(255, 255, 255);"></i>
+                                        </a>
+                                    </li>
+                                    <li class="social-share-item">
+                                        <a href="//twitter.com/harttleharttle" target="" style="background: rgb(51, 204, 255);">
+                                            <i class="fa fa-twitter" style="color: rgb(255, 255, 255);"></i>
+                                        </a>
+                                    </li>
+                                </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section id="comment-requirement" class="card">
+                        {% if request.user.is_authenticated %}
+                            <form id="Comment_ok" class="form" action="." method="post" >
+                                <div style="margin:5px;">
+                                <h3>发表评论</h3>
+                                {% csrf_token %}
+								{{ comment_form|crispy }}
+                                <input type="submit" class="btn btn-outline-primary my-2 my-sm-2" value="Submit" style="margin:10px;">
+                                </div>
+                            </form>
+                        {% else %}
+                            <div id="comment_login" class="container">
+                                <div style="margin:5px;">
+                                    <h3>登录后发表评论</h3>
+
+                                    <a href="{% url 'ccusers:login' %}?next={{ request.path }}">Login</a>|
+                                    <a href="{% url 'ccusers:register' %}?next={{ request.path }}">Register</a>
+                                </div>
+                            </div>
+                        {% endif %}
+                </section>
+                <section id="comments-detail" class="card">
+                    <div class="card-header" style="margin:10px;">
+
+                        <h3>评论列表，共{{ instance.comments.count }}条评论</h3>
+
+                    </div>
+
+                    <div class="card-body">
+                        {% if comments != 0 %}
+                        {% for comment in comments %}
+
+                            <div class="blockquote" style="background-color: lavender;">
+                                <p style="margin-left:10px;font-size: medium"> ID:<b>{{ comment.user }}</b>评论道：</p>
+                                <p style="margin-left:15px;font-size: initial;">{{ comment.content }}</p>
+
+                                <footer id="comment_content" style="text-align:right;margin-right:10px;font-size: medium;">
+                                    ID:{{ comment.user }}|评论于|{{ comment.created_time|timesince }}前|
+                                    {{ comment.children.count }}条回复|
+                                    <a class="comment-reply-btn" href="#">我要回复</a>|
+                                 </footer>
+
+                                <div class="comment-reply" style="display:none;" >
+                                    {% for child_comment in comment.children %}
+                                    <div class="blockquote" style="background-color:palegoldenrod;">
+                                        <p style="margin-left:25px;font-size: x-small;">ID：<b>{{ child_comment.user }}</b>回复ID:{{ comment.user }}:</p>
+                                            <p style="margin-left:30px;font-size:medium;">&nbsp;{{ child_comment.content }}</p>
+                                        <footer style="margin-left: 10px;text-align:right;margin-right:10px;font-size: x-small;">
+                                            ID：{{ child_comment.user }}|回复于|{{ child_comment.created_time|timesince }}前|
+                                        </footer>
+                                    </div>
+                                    {% endfor %}
+
+                                <form action="." method="post" id="comments-container">
+                                    {% csrf_token %}
+                                    {{ comment_form|crispy }}
+                                    <input type="hidden" name="parent_id" value="{{ comment.id }}">
+                                    <input type="submit" class="btn btn-outline-warning my-2 my-sm-2" id="Reply" value="Reply">
+                                </form>
+                                    <br>
+                            </div>
+                        {% endfor %}
+                        {% else %}
+                                <div class="blockquote">
+                                    <p>暂无评论！</p>
+                                </div>
+                            </div>
+                        {% endif %}
+
+
+                    </div>
+
+                </section>
+            </div>
+            <div class="col-md-2">
+                <div class="card card-inverse" id="tags-card">
+                    <div class="card-header" id="tags-header">
+                        <h6 class="card-title">标签云</h6></div>
+                    <div class="card-body" id="tags-body">
+                        {% get_tags as tag_list %}
+						{% for tag in tag_list %}
+                        <a href="{% url 'ccposts:tag' tag.pk %}" class="card-link btn btn-outline-secondary my-2 my-sm-2 btn-sm">
+                        <span class="card-text">
+                            {{ tag.tagname }}{{ tag.num_posts }}
+                        </span>
+                        </a>
+                        {% empty %}
+						<h6>暂无标签！</h6>
+						{% endfor %}
+                    </div>
+                </div>
+                <br>
+
+
+                <div class="card" id="posts-sort-card">
+                    <div class="card-header" id="posts-sort-header">
+                        <h6 class="card-title">文章分类</h6></div>
+                    <div class="card-body" id="posts-sort-body">
+                        {% get_categories as category_list %}
+						{% for category in category_list %}
+                        <a href="{% url 'ccposts:category' category.pk %}" class="card-link" style="font-size: medium;">
+                            {{ category.categoryname }}
+                            相关
+                            <span>{{ category.num_posts }}</span>
+                            篇
+                        </a>
+                        {% empty %}
+                            <h6>暂无分类！</h6>
+                        {% endfor %}
+                    </div>
+                </div>
+                <br>
+                <div class="card" id="posts-archive-card">
+                    <div class="card-header" id="posts-archive-header">
+                        <h6 class="card-title">文章归档</h6></div>
+                    <div class="card-body" id="posts-archive-body">
+                        {% archives as date_list %}
+						{% for date in date_list %}
+                        <span>
+                            <a href="{% url 'ccposts:archivebydate' date.year date.month %}" class="card-link">
+                                {{ date.year }} 年 {{ date.month }} 月
+                            </a>
+                        </span>
+                        {% empty %}
+						<h6>暂无归档！</h6>
+						{% endfor %}
+                    </div>
+                </div>
+                <br>
+
+            </div>
+            <br>
+        </div>
+    </div>
+    <br>
+    <footer id="footer" class="card">
+        <div class="row">
+        <div class="col-md-12" style="margin-bottom:10px;">
+            <a href="#" type="button" class="btn btn-outline-warning btn-lg btn-block" style="background-color: rgb(8, 6, 6);font-size: medium;">
+                回到顶部
+            </a>
+        </div>
+        </div>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-6">
+                    <h6 class="text-right text-muted" id="Contact">Contact: 13033287512@qq.com</h6>
+                    <h6 class="text-right text-muted">Contact: github</h6></div>
+                <div class="col-md-6">
+                    <h6 class="text-left text-muted">Contact: github</h6></div>
+            </div>
+        </div>
+        <br>
+        <div>
+            <div class="row">
+                <div class="col-md-12">
+                    <p class="text-center text-muted" style="font-size: x-small;"><strong>若无特殊声明，本站内容均遵循CC BY-SA 4.0协议</strong> </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

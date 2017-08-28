@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+{% load blog_tags %}
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>AZI</title>
+    <!-- Bootstrap core CSS -->
+    <link href="/static/ccposts/startbootstrap-agency-gh-pages/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom fonts for this template -->
+    <link href="/static/ccposts/startbootstrap-agency-gh-pages/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+    <link href='https://fonts.googleapis.com/css?family=Kaushan+Script' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700' rel='stylesheet' type='text/css'>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!-- Custom styles for this template -->
+    <link href="/static/ccposts/startbootstrap-agency-gh-pages/css/agency.min.css" rel="stylesheet">
+      <!-- Bootstrap core JavaScript -->
+    <script src="/static/ccposts/startbootstrap-agency-gh-pages/vendor/jquery/jquery.min.js"></script>
+    <script src="/static/ccposts/startbootstrap-agency-gh-pages/vendor/popper/popper.min.js"></script>
+    <script src="/static/ccposts/startbootstrap-agency-gh-pages/vendor/bootstrap/js/bootstrap.min.js"></script>
+    <!-- Plugin JavaScript -->
+    <script src="/static/ccposts/startbootstrap-agency-gh-pages/vendor/jquery-easing/jquery.easing.min.js"></script>
+    <!-- Custom scripts for this template -->
+	<script src="/static/ccposts/startbootstrap-agency-gh-pages/js/agency.min.js"></script>
+  </head>
+
+  <body id="page-top">
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
+      <a class="navbar-brand" href="#page-top">AZI</a>
+      <button class="navbar-toggler navbar-toggler-right"
+              type="button" data-toggle="collapse" data-target="#navbarResponsive"
+              aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        Menu
+        <i class="fa fa-bars"></i>
+      </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+        {% if user.is_authenticated %}
+            <ul>
+                <li class=""> {{ user.username }}</li>
+                <li>
+                    <a href="{% url 'ccusers:logout' %}?next={{ request.path }}" >
+                        <span class="glyphicon glyphicon-user"></span>Logout</a>
+                </li>
+            {% else %}
+                <li>
+                    <a href="{% url 'ccusers:login' %}?next={{ request.path }}">Login</a>
+                </li>
+                <li>
+                  <a href="{% url 'ccusers:register' %}">Register</a>
+                <!--	<a href="{% url 'ccusers:register' %}?next={{ request.path }}">Register</a>-->
+                </li>
+            {% endif %}
+                <li>
+                    <a href="{% url 'ccposts:RSS' %}"><i class="glyphicon glyphicon-signal"></i></a>
+                </li>
+            </ul>
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="#home">首页</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#search-for">站内搜索</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#portfolio">文章推荐</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#services">分类导航</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+    <script>
+      function submit(){
+			        var content = document.getElementByIdx_x_x("search bar").value;
+			        window.location.href='/search/?q='+content;
+			        }
+
+			function mySearchFunction(){
+				var x = document.getElementById("mySearch").value;
+				window.location.href='/search/?q='+x;//+'&models=ccposts.Article';
+			}
+    </script>
+
+     <script>
+$(function(){
+        $('#ajax_search').keyup(function(){
+          $.ajax({
+              type:"POST",
+              url: "/ccposts/ajax_search/",
+              data: {
+                    'search_text': $('#ajax_search').val(),
+                    'csrfmiddlewaretoken': $("input[name=csrfmiddlewaretoken]").val()
+        },
+        success: searchSuccess,
+        dataType:'html'
+        });
+      });
+    });
+
+function searchSuccess(data, textStatus, jqXHR)
+{
+    $('#ajax_search_results').html(data);
+  }
+</script>
+    <!-- Header -->
+    <header id="home" class="masthead row" style="background-color:black;">
+     <div class="col-md-12" style="text-align:center">
+      <div class="container ">
+        <div class="intro-text">
+          <div class="intro-lead-in">Welcome To My Blog!</div>
+          <div class="intro-heading">ALL About AZI!</div>
+          <div class="desc_content"><h1><b>阿滋//AZI</b></h1>
+			<h4>这是阿滋的博客。<span class="tooltip">saibunnsi<span class="">: Believe me, it's nothing about sb, it's my real name! </span></span></h4>
+			<h4>因为希望能有一个见证成长的地方，所以有了这里。</h4></div>
+
+        </div>
+        </div>
+     </div>
+        </header>
+
+    <section id="search-for" style="background-color: cadetblue;min-height:739px;">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12 text-center">
+            <h2 class="section-heading">站内搜索</h2>
+              <h3 class="section-subheading text-muted"></h3>
+          </div>
+        </div>
+        <div class="row text-center">
+            <div class="col-md-12">
+                {% csrf_token %}
+                 <input type="text" id="ajax_search" name="ajax_search" placeholder="搜索本站文章..."/>
+                    <ul class="list-inline quicklinks">
+                        <li>
+                            <a id="ajax_search_results"></a>
+                        </li>
+                    </ul>
+
+		  </div>
+        </div>
+      </div>
+    </section>
+	 <!-- 文章推荐-->
+    <section id="portfolio" style="background-color: rgb(85, 107, 47);">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12 text-center">
+            <h2 class="section-heading">文章推荐</h2>
+            <h3 class="section-subheading text-muted"></h3>
+          </div>
+        </div>
+        <div class="row text-center">
+          <!--最新文章-->
+          <div class="col-md-4">
+            <h4 class="service-heading">最新发布</h4>
+			 {% get_recent_articles as recent_article_list %}
+            {% for article in recent_article_list %}
+            <ul class="list-inline quicklinks">
+				<li class="list-inline-item">
+					 <a href="{{ article.get_absolute_url }}" class="text-left-align">|{{ article.title }}|</a>
+				</li>
+               |{{ article.last_modified_time|date:"Y-m-d" }}|
+            </ul>
+            {% empty %}
+                <h5>暂无文章！</h5>
+            {% endfor %}
+          <br>
+		  </div>
+
+          <!--热度推荐-->
+          <div class="col-md-4">
+            <h4 class="service-heading">热度推荐</h4>
+            <p class="text-muted"></p>
+            {% get_hottest_articles as hottest_article_list %}
+            {% for article in hottest_article_list %}
+              <a href="{{ article.get_absolute_url }}" class="text-muted">
+                <div class="text-left-align">{{ article.title }}&nbsp;|{{ article.last_modified_time|date:"Y-m-d"}}</div>
+              </a>
+            {% empty %}
+                暂无文章！
+            {% endfor %}
+            <br>
+          </div>
+
+          <!--随机推荐 --><!--待完善！！！-->
+          <div class="col-md-4">
+            <h4 class="service-heading">随机推荐</h4>
+            <p class="text-muted"></p>
+            {% get_recent_articles as recent_article_list %}
+            {% for article in recent_article_list %}
+                <a href="{{ article.get_absolute_url }}" >
+                   <div class="text-muted">{{ article.title }}&nbsp;|
+                     {{ article.last_modified_time|date:"Y-m-d" }}|
+                   </div>
+                </a>
+            {% empty %}
+                暂无文章！
+            {% endfor %}
+            <br>
+          </div>
+
+        </div>
+      </div>
+    </section>
+    <!--目录导航-->
+    <section id="services">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12 text-center">
+            <h2 class="section-heading">分类导航</h2>
+              <h3 class="section-subheading text-muted"></h3>
+          </div>
+        </div>
+
+        <div class="row text-center">
+
+
+
+            <!--文章分类-->
+          <div class="col-md-4">
+            <h4 class="service-heading">文章分类</h4>
+            {% get_categories as category_list %}
+            {% for category in category_list %}
+                <a href="{% url 'ccposts:category' category.pk %}" class="text-muted">{{ category.categoryname }}&nbsp;&nbsp;{{ category.num_posts }}篇</a>
+            {% empty %}
+                暂无分类!
+            {% endfor %}
+		  </div>
+
+          <!--标签云-->
+          <div class="col-md-4">
+            <h4 class="service-heading">标签云</h4>
+            <p class="text-muted"></p>
+            {% get_tags as tag_list %}
+            {% for tag in tag_list %}
+                <a href="{% url 'ccposts:tag' tag.pk %}"><span class="text-muted">{{ tag.tagname }}{{ tag.num_posts }}</span></a>
+            {% empty %}
+                暂无标签！
+            {% endfor %}
+            <br>
+          </div>
+
+        </div>
+      </div>
+    </section>
+    <!-- Footer -->
+  <footer id="footer" class="card" style="background-color:black;">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-6">
+                    <h6 class="text-left text-muted" id="Contact">Contact: saibunnsi@gmail.com</h6>
+                    <h6 class="text-left text-muted">Contact: github</h6>
+                </div>
+            </div>
+        <br>
+        <div>
+            <div class="row">
+                <div class="col-md-12">
+                    <p class="text-center text-muted" style="font-size: x-small;">@powered by bootstrap</p>
+                </div>
+            </div>
+        </div>
+        </div>
+    </footer>
+  </body>
+</html>
